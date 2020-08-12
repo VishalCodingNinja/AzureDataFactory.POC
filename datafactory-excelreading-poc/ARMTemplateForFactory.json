@@ -56,7 +56,9 @@
 								"type": "DelimitedTextSource",
 								"storeSettings": {
 									"type": "AzureBlobStorageReadSettings",
-									"recursive": false
+									"recursive": false,
+									"maxConcurrentConnections": 9995,
+									"enablePartitionDiscovery": false
 								},
 								"formatSettings": {
 									"type": "DelimitedTextReadSettings",
@@ -67,19 +69,14 @@
 								"type": "CosmosDbSqlApiSink",
 								"writeBatchSize": 100000,
 								"writeBehavior": "insert",
-								"disableMetricsCollection": false
+								"disableMetricsCollection": false,
+								"maxConcurrentConnections": 1000
 							},
 							"enableStaging": false,
-							"parallelCopies": 20,
+							"parallelCopies": 32,
 							"enableSkipIncompatibleRow": true,
-							"logStorageSettings": {
-								"linkedServiceName": {
-									"referenceName": "AzureBlobStorage2",
-									"type": "LinkedServiceReference"
-								},
-								"path": "mycontainer"
-							},
-							"validateDataConsistency": false
+							"validateDataConsistency": false,
+							"dataIntegrationUnits": 32
 						},
 						"inputs": [
 							{
