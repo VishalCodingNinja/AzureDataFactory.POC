@@ -1,0 +1,7 @@
+{
+	"name": "CopyBlobToSQL",
+	"properties": {
+		"concurrency": 21,
+		"annotations": []
+	}
+}
