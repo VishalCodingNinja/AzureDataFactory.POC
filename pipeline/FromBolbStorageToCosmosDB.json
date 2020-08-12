@@ -1,0 +1,72 @@
+{
+	"name": "FromBolbStorageToCosmosDB",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_z91",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "mycontainer//1500000 Sales Records.csv"
+					},
+					{
+						"name": "Destination",
+						"value": "Database-collection"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings",
+							"skipLineCount": 0
+						}
+					},
+					"sink": {
+						"type": "CosmosDbSqlApiSink",
+						"writeBatchSize": 100000,
+						"writeBehavior": "insert",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"parallelCopies": 20,
+					"enableSkipIncompatibleRow": true,
+					"logStorageSettings": {
+						"linkedServiceName": {
+							"referenceName": "AzureBlobStorage2",
+							"type": "LinkedServiceReference"
+						},
+						"path": "mycontainer"
+					},
+					"validateDataConsistency": false
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_z91",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_z91",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
